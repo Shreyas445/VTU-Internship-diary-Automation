@@ -1,11 +1,13 @@
 # VTU Internship Diary Automation
 
-This Python script automates the process of filling out the 18-week internship diary on the VTU Internship Portal. It uses Selenium WebDriver to log in, navigate the dashboard, and populate weekly entries from a JSON file.
+This Python script automates the process of filling out the daily internship diary on the VTU Internship Portal. It uses Selenium WebDriver to log in, navigate the dashboard, and populate weekly entries from a JSON file.
+
+### get your prompt here ----->
 
 ## 🚀 Features
 
 *   **Automated Login**: Securely logs in using credentials stored in a local JSON file.
-*   **Batch Processing**: Automatically fills entries for all 18 weeks in one go.
+*   **Batch Processing**: Automatically fills entries for all day in one go.
 *   **Smart Selection**: Handles dropdowns for Project, Year, and Month, and dynamically picks the correct Day from the calendar.
 *   **Robust Form Filling**: Populates "Work Summaries", "Hours Worked", "Learnings/Outcomes", and handles multi-select "Skills Used".
 *   **Error Handling**: Includes retry logic and fallback mechanisms for tricky web elements.
@@ -20,8 +22,7 @@ This Python script automates the process of filling out the 18-week internship d
 
 1.  **Clone this repository** (or download the files):
     ```bash
-    git clone <your-repo-url>
-    cd <your-repo-folder>
+    git clone https://github.com/Shreyas445/VTU-Internship-diary-Automation
     ```
 
 2.  **Install Dependencies**:
@@ -50,7 +51,7 @@ Edit the `internship_diary_entries.json` file to include your specific weekly up
 ```json
 [
   {
-    "week": 1,
+    "day": 1,
     "date": "11-02-2025",
     "work_summary": "Literature survey and problem definition...",
     "hours_worked": 6.0,
