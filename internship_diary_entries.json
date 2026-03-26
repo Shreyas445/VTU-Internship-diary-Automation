@@ -1,0 +1,467 @@
+[
+    {
+        "day": 1,
+        "date": "01-01-2026",
+        "work_summary": "Attended introductory demo class on Python full stack development at Pyspyders .",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood internship objectives, course structure, and basics of full stack development.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 2,
+        "date": "02-01-2026",
+        "work_summary": "Explored Python fundamentals including syntax, variables, and data types.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Gained understanding of Python syntax and basic programming constructs.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 3,
+        "date": "03-01-2026",
+        "work_summary": "Practiced conditional statements and loops through coding exercises.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Improved logical thinking and control flow implementation in Python.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 4,
+        "date": "05-01-2026",
+        "work_summary": "Worked on Python functions and modular programming concepts.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned how to write reusable and structured code using functions.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 5,
+        "date": "06-01-2026",
+        "work_summary": "Studied lists, tuples, and dictionaries with practical examples.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood Python data structures and their real-world usage.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 6,
+        "date": "07-01-2026",
+        "work_summary": "Implemented mini programs using Python data structures.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Enhanced problem-solving using collections and data manipulation.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 7,
+        "date": "08-01-2026",
+        "work_summary": "Introduced to object-oriented programming concepts in Python.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned classes, objects, and encapsulation basics.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 8,
+        "date": "09-01-2026",
+        "work_summary": "Practiced inheritance and polymorphism with sample programs.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood advanced OOP concepts for scalable design.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 9,
+        "date": "10-01-2026",
+        "work_summary": "Worked on file handling operations in Python.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned reading, writing, and managing files programmatically.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 10,
+        "date": "12-01-2026",
+        "work_summary": "Explored exception handling and debugging techniques.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Improved error handling and debugging skills.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 11,
+        "date": "13-01-2026",
+        "work_summary": "Introduction to HTML structure and web basics.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood basic webpage structure using HTML tags.",
+        "skills_used": [
+            "HTML"
+        ]
+    },
+    {
+        "day": 12,
+        "date": "14-01-2026",
+        "work_summary": "Worked on creating static webpages using HTML elements.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned webpage structuring and semantic elements.",
+        "skills_used": [
+            "HTML"
+        ]
+    },
+    {
+        "day": 13,
+        "date": "15-01-2026",
+        "work_summary": "Introduced to CSS styling and layout techniques.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned styling webpages using CSS properties.",
+        "skills_used": [
+            "CSS"
+        ]
+    },
+    {
+        "day": 14,
+        "date": "16-01-2026",
+        "work_summary": "Implemented responsive designs using CSS.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood layout design and responsiveness.",
+        "skills_used": [
+            "CSS",
+            "Layout Design"
+        ]
+    },
+    {
+        "day": 15,
+        "date": "17-01-2026",
+        "work_summary": "Explored JavaScript basics and DOM manipulation.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned dynamic behavior for web pages.",
+        "skills_used": [
+            "JavaScript"
+        ]
+    },
+    {
+        "day": 16,
+        "date": "19-01-2026",
+        "work_summary": "Worked on event handling and interactive UI features.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Enhanced interactivity using JavaScript events.",
+        "skills_used": [
+            "JavaScript"
+        ]
+    },
+    {
+        "day": 17,
+        "date": "20-01-2026",
+        "work_summary": "Introduction to SQL and database concepts.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood relational databases and queries.",
+        "skills_used": [
+            "mySql"
+        ]
+    },
+    {
+        "day": 18,
+        "date": "21-01-2026",
+        "work_summary": "Practiced CRUD operations using SQL queries.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned data manipulation in databases.",
+        "skills_used": [
+            "mySql"
+        ]
+    },
+    {
+        "day": 19,
+        "date": "22-01-2026",
+        "work_summary": "Studied normalization and database design.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Improved data modeling techniques.",
+        "skills_used": [
+            "Data modeling",
+            "mySql"
+        ]
+    },
+    {
+        "day": 20,
+        "date": "23-01-2026",
+        "work_summary": "Introduction to Django framework and environment setup.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned project creation and setup in Django.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 21,
+        "date": "24-01-2026",
+        "work_summary": "Explored Django project structure and apps.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood modular structure of Django projects.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 22,
+        "date": "26-01-2026",
+        "work_summary": "Worked on Django models and database integration.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned ORM and model creation.",
+        "skills_used": [
+            "Python",
+            "mySql"
+        ]
+    },
+    {
+        "day": 23,
+        "date": "27-01-2026",
+        "work_summary": "Implemented Django views and URL routing.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood request-response cycle.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 24,
+        "date": "28-01-2026",
+        "work_summary": "Worked with Django templates and frontend integration.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned dynamic content rendering.",
+        "skills_used": [
+            "HTML",
+            "CSS",
+            "Python"
+        ]
+    },
+    {
+        "day": 25,
+        "date": "29-01-2026",
+        "work_summary": "Built forms and handled user input in Django.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned form validation and processing.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 26,
+        "date": "30-01-2026",
+        "work_summary": "Implemented authentication system in Django.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood login, logout, and session handling.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 27,
+        "date": "31-01-2026",
+        "work_summary": "Integrated database with web application features.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Connected backend logic with persistent storage.",
+        "skills_used": [
+            "Python",
+            "mySql"
+        ]
+    },
+    {
+        "day": 28,
+        "date": "02-02-2026",
+        "work_summary": "Started developing core project modules using Django.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Applied learned concepts to real-world project.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 29,
+        "date": "03-02-2026",
+        "work_summary": "Implemented CRUD functionalities in project.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Strengthened backend development skills.",
+        "skills_used": [
+            "Python",
+            "mySql"
+        ]
+    },
+    {
+        "day": 30,
+        "date": "04-02-2026",
+        "work_summary": "Worked on frontend integration with backend APIs.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Improved full stack integration understanding.",
+        "skills_used": [
+            "HTML",
+            "CSS",
+            "JavaScript"
+        ]
+    },
+    {
+        "day": 31,
+        "date": "05-02-2026",
+        "work_summary": "Enhanced UI design and responsiveness of project.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Improved user interface design skills.",
+        "skills_used": [
+            "CSS",
+            "Layout Design"
+        ]
+    },
+    {
+        "day": 32,
+        "date": "06-02-2026",
+        "work_summary": "Tested application features and fixed initial bugs.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned debugging and testing practices.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 33,
+        "date": "07-02-2026",
+        "work_summary": "Optimized database queries and performance.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Improved efficiency of application.",
+        "skills_used": [
+            "mySql"
+        ]
+    },
+    {
+        "day": 34,
+        "date": "09-02-2026",
+        "work_summary": "Implemented additional features and enhancements.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Expanded project functionality.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 35,
+        "date": "10-02-2026",
+        "work_summary": "Conducted integration testing across modules.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Ensured smooth interaction between components.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 36,
+        "date": "11-02-2026",
+        "work_summary": "Worked on deployment basics and project configuration.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood deployment workflow.",
+        "skills_used": [
+            "Git"
+        ]
+    },
+    {
+        "day": 37,
+        "date": "12-02-2026",
+        "work_summary": "Performed final debugging and issue resolution.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Improved stability of application.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 38,
+        "date": "13-02-2026",
+        "work_summary": "Prepared project documentation and reports.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Learned documentation standards.",
+        "skills_used": [
+            "Canva"
+        ]
+    },
+    {
+        "day": 39,
+        "date": "14-02-2026",
+        "work_summary": "Reviewed project with mentor and incorporated feedback.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Improved project quality based on feedback.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 40,
+        "date": "16-02-2026",
+        "work_summary": "Performed final testing and validation.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Ensured project meets requirements.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 41,
+        "date": "17-02-2026",
+        "work_summary": "Completed final project refinements.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Polished application features and UI.",
+        "skills_used": [
+            "Python",
+            "CSS"
+        ]
+    },
+    {
+        "day": 42,
+        "date": "18-02-2026",
+        "work_summary": "Finalized project and prepared presentation.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Gained confidence in presenting technical work.",
+        "skills_used": [
+            "Canva"
+        ]
+    },
+    {
+        "day": 43,
+        "date": "19-02-2026",
+        "work_summary": "Submitted completed project and documentation.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Successfully completed full stack project lifecycle.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 44,
+        "date": "20-02-2026",
+        "work_summary": "Participated in project evaluation and feedback session.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Understood strengths and areas for improvement.",
+        "skills_used": [
+            "Python"
+        ]
+    },
+    {
+        "day": 45,
+        "date": "21-02-2026",
+        "work_summary": "Reflected on internship experience and consolidated learnings.",
+        "hours_worked": 8.0,
+        "learnings_outcomes": "Gained comprehensive knowledge of Python full stack development.",
+        "skills_used": [
+            "Python",
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "mySql"
+        ]
+    }
+]

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Prompt Generator - Daily Output</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg-color: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --success: #10B981;
+            --error: #EF4444;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        label i {
+            color: var(--text-muted);
+        }
+
+        .required-asterisk {
+            color: var(--error);
+            font-weight: bold;
+            margin-left: 2px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #F9FAFB;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            background-color: #FFF;
+        }
+
+        input.invalid-date {
+            border-color: var(--error);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .toggle-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+            background: #F9FAFB;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            width: fit-content;
+        }
+
+        .toggle-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .toggle-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #dynamic-fields {
+            margin-top: 2rem;
+            border-top: 1px dashed var(--border);
+            padding-top: 1.5rem;
+        }
+
+        .dynamic-entry {
+            background: #F9FAFB;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .dynamic-entry:focus-within {
+            border-color: var(--primary);
+            background: #FFF;
+        }
+
+        .dynamic-entry h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        #result-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        #prompt-output {
+            font-family: 'Courier New', Courier, monospace;
+            background: #1F2937;
+            color: #E5E7EB;
+            min-height: 400px;
+            font-size: 0.9rem;
+            padding: 1.5rem;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            body {
+                padding: 1rem;
+            }
+
+            .toggle-container {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .toggle-btn {
+                flex: 1;
+                text-align: center;
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-robot"></i> VTU Daily Diary Generator</h1>
+            <p>Enter your details. The AI will output a strict Day-by-Day JSON array, filling in any gaps with realistic
+                progressions.</p>
+        </div>
+
+        <div class="card">
+            <form id="internship-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i> Company Name <span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" id="company" placeholder="e.g., Tech Solutions Inc." required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-laptop-code"></i> Domain <span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" id="domain" placeholder="e.g., App Development, IoT, AI" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="far fa-calendar-alt"></i> From Date <span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" id="start-date" placeholder="DD-MM-YYYY" maxlength="10" required>
+                        <div class="error-message" id="start-date-error">Please enter a valid date (DD-MM-YYYY).</div>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="far fa-calendar-check"></i> To Date <span
+                                class="required-asterisk">*</span></label>
+                        <input type="text" id="end-date" placeholder="DD-MM-YYYY" maxlength="10" required>
+                        <div class="error-message" id="end-date-error">Please enter a valid date (DD-MM-YYYY).</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label><i class="fas fa-align-left"></i> Brief Explanation of Work <span
+                                class="required-asterisk">*</span></label>
+                        <textarea id="brief"
+                            placeholder="Provide a high-level overview of the internship project. The AI uses this to intelligently generate missing daily logs..."
+                            required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label><i class="fas fa-list"></i> Detailed Entry Mode (Your Input Method)</label>
+                        <div class="toggle-container">
+                            <button type="button" class="toggle-btn active" id="btn-day" onclick="setMode('day')">Day by
+                                Day</button>
+                            <button type="button" class="toggle-btn" id="btn-week" onclick="setMode('week')">Week by
+                                Week</button>
+                            <button type="button" class="toggle-btn" id="btn-month" onclick="setMode('month')">Month by
+                                Month</button>
+                        </div>
+                        <small style="color: var(--text-muted); margin-top: 0.5rem; display: block;">
+                            * Select how you want to paste your existing notes. Regardless of your choice, the AI will
+                            generate <strong>Daily JSON</strong> outputs. Leave blanks if unsure; AI will fill them
+                            realistically.
+                        </small>
+                    </div>
+                </div>
+
+                <div id="dynamic-fields">
+                </div>
+
+                <div class="error-message" id="validation-error" style="text-align: center;">
+                    <i class="fas fa-exclamation-circle"></i> Please fill in all required fields (marked with *) and
+                    ensure dates are correct.
+                </div>
+
+                <div class="form-row" style="margin-top: 2rem; margin-bottom: 0;">
+                    <div class="form-group full-width">
+                        <button type="button" class="btn" onclick="generatePrompt()">
+                            <i class="fas fa-magic"></i> Generate AI Prompt
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="card" id="result-section">
+            <div class="result-header">
+                <h3><i class="fas fa-terminal"></i> Generated Prompt</h3>
+                <button class="btn btn-success" style="width: auto;" onclick="copyPrompt()">
+                    <i class="far fa-copy"></i> Copy Prompt
+                </button>
+            </div>
+            <textarea id="prompt-output" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        let currentMode = 'day';
+        let parsedStartDate = null;
+        let parsedEndDate = null;
+        let totalWorkingDays = 0;
+
+        // Date parsing function for DD-MM-YYYY
+        function parseDateString(str) {
+            const match = str.match(/^(\d{2})-(\d{2})-(\d{4})$/);
+            if (!match) return null;
+
+            const d = parseInt(match[1], 10);
+            const m = parseInt(match[2], 10) - 1; // Month is 0-indexed in JS Date
+            const y = parseInt(match[3], 10);
+
+            const date = new Date(y, m, d);
+            if (date.getFullYear() === y && date.getMonth() === m && date.getDate() === d) {
+                return date;
+            }
+            return null;
+        }
+
+        // Auto-format dates while typing and validate
+        function handleDateInput(e) {
+            let val = e.target.value.replace(/\D/g, ''); // Remove non-digits
+            if (val.length > 8) val = val.substring(0, 8);
+
+            let formatted = val;
+            if (val.length > 4) {
+                formatted = val.substring(0, 2) + '-' + val.substring(2, 4) + '-' + val.substring(4, 8);
+            } else if (val.length > 2) {
+                formatted = val.substring(0, 2) + '-' + val.substring(2, 4);
+            }
+            e.target.value = formatted;
+
+            if (formatted.length === 10) {
+                validateDates();
+            }
+        }
+
+        document.getElementById('start-date').addEventListener('input', handleDateInput);
+        document.getElementById('end-date').addEventListener('input', handleDateInput);
+        document.getElementById('start-date').addEventListener('blur', validateDates);
+        document.getElementById('end-date').addEventListener('blur', validateDates);
+
+        function validateDates() {
+            const startStr = document.getElementById('start-date').value;
+            const endStr = document.getElementById('end-date').value;
+
+            parsedStartDate = parseDateString(startStr);
+            parsedEndDate = parseDateString(endStr);
+
+            const startError = document.getElementById('start-date-error');
+            const endError = document.getElementById('end-date-error');
+
+            if (startStr.length === 10) {
+                if (!parsedStartDate) {
+                    startError.style.display = 'block';
+                    document.getElementById('start-date').classList.add('invalid-date');
+                } else {
+                    startError.style.display = 'none';
+                    document.getElementById('start-date').classList.remove('invalid-date');
+                }
+            }
+
+            if (endStr.length === 10) {
+                if (!parsedEndDate) {
+                    endError.style.display = 'block';
+                    document.getElementById('end-date').classList.add('invalid-date');
+                } else {
+                    endError.style.display = 'none';
+                    document.getElementById('end-date').classList.remove('invalid-date');
+                }
+            }
+
+            if (parsedStartDate && parsedEndDate) {
+                if (parsedStartDate <= parsedEndDate) {
+                    calculateTotalWorkingDays();
+                    generateFields();
+                } else {
+                    document.getElementById('dynamic-fields').innerHTML = '<p style="color: var(--error);"><i class="fas fa-exclamation-triangle"></i> Error: End Date cannot be earlier than Start Date.</p>';
+                }
+            }
+        }
+
+        function calculateTotalWorkingDays() {
+            totalWorkingDays = 0;
+            let curr = new Date(parsedStartDate);
+            while (curr <= parsedEndDate) {
+                if (curr.getDay() !== 0) { // 0 is Sunday
+                    totalWorkingDays++;
+                }
+                curr.setDate(curr.getDate() + 1);
+            }
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('btn-day').classList.remove('active');
+            document.getElementById('btn-week').classList.remove('active');
+            document.getElementById('btn-month').classList.remove('active');
+            document.getElementById(`btn-${mode}`).classList.add('active');
+            if (parsedStartDate && parsedEndDate && parsedStartDate <= parsedEndDate) {
+                generateFields();
+            }
+        }
+
+        function formatDateStr(dateObj) {
+            const dd = String(dateObj.getDate()).padStart(2, '0');
+            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const yyyy = dateObj.getFullYear();
+            return `${dd}-${mm}-${yyyy}`;
+        }
+
+        function generateFields() {
+            const container = document.getElementById('dynamic-fields');
+            container.innerHTML = '';
+
+            if (currentMode === 'day') {
+                let current = new Date(parsedStartDate);
+                let dayCount = 1;
+                while (current <= parsedEndDate) {
+                    if (current.getDay() !== 0) {
+                        createEntryField(`Day ${dayCount} (${formatDateStr(current)})`, `day-${dayCount}`);
+                        dayCount++;
+                    }
+                    current.setDate(current.getDate() + 1);
+                }
+            } else if (currentMode === 'week') {
+                let current = new Date(parsedStartDate);
+                let weekCount = 1;
+                while (current <= parsedEndDate) {
+                    let weekEnd = new Date(current);
+                    weekEnd.setDate(weekEnd.getDate() + 6);
+                    if (weekEnd > parsedEndDate) weekEnd = new Date(parsedEndDate);
+
+                    let dateRangeStr = `${formatDateStr(current)} to ${formatDateStr(weekEnd)}`;
+                    createEntryField(`Week ${weekCount} (${dateRangeStr})`, `week-${weekCount}`);
+
+                    weekCount++;
+                    current.setDate(current.getDate() + 7);
+                }
+            } else if (currentMode === 'month') {
+                let current = new Date(parsedStartDate);
+                let monthCount = 1;
+                while (current <= parsedEndDate) {
+                    let monthEnd = new Date(current);
+                    monthEnd.setMonth(monthEnd.getMonth() + 1);
+                    monthEnd.setDate(monthEnd.getDate() - 1);
+                    if (monthEnd > parsedEndDate) monthEnd = new Date(parsedEndDate);
+
+                    let dateRangeStr = `${formatDateStr(current)} to ${formatDateStr(monthEnd)}`;
+                    createEntryField(`Month ${monthCount} (${dateRangeStr})`, `month-${monthCount}`);
+
+                    monthCount++;
+                    current = new Date(monthEnd);
+                    current.setDate(current.getDate() + 1);
+                }
+            }
+        }
+
+        function createEntryField(labelTxt, idBase) {
+            const container = document.getElementById('dynamic-fields');
+            const div = document.createElement('div');
+            div.className = 'dynamic-entry';
+
+            div.innerHTML = `
+            <h4><i class="fas fa-pen-alt"></i> ${labelTxt}</h4>
+            <textarea id="${idBase}" class="log-entry-input" data-label="${labelTxt}" placeholder="What did you do / learn? (Leave blank if unsure, AI will expand this into daily logs)"></textarea>
+        `;
+            container.appendChild(div);
+        }
+
+        function generatePrompt() {
+            const company = document.getElementById('company').value.trim();
+            const domain = document.getElementById('domain').value.trim();
+            const brief = document.getElementById('brief').value.trim();
+            const startDateStr = document.getElementById('start-date').value;
+            const errorMsg = document.getElementById('validation-error');
+
+            if (!company || !domain || !brief || !parsedStartDate || !parsedEndDate || parsedStartDate > parsedEndDate) {
+                errorMsg.style.display = 'block';
+                return;
+            }
+            errorMsg.style.display = 'none';
+
+            const inputs = document.querySelectorAll('.log-entry-input');
+            let logDataStr = "";
+
+            inputs.forEach(input => {
+                const val = input.value.trim();
+                logDataStr += `* ${input.getAttribute('data-label')}:\n  ${val || "[User left this blank - AI MUST infer and distribute realistic tasks for this period]"}\n\n`;
+            });
+
+            const promptTemplate = `You are an AI system that generates and structures internship diary data based on partial or incomplete user input.
+
+TASK:
+Convert the provided Internship Context and Log Data into a strict DAILY structured JSON format suitable for automatic entry in the VTU Internship Diary Portal.
+
+IMPORTANT RULES:
+
+1. Generate and format DAILY meeting/work entries.
+2. Ignore purely administrative filler; focus on core technical work, progression, and learning.
+3. Your output must strictly contain:
+   - Day number
+   - Date (Format: DD-MM-YYYY)
+   - Work done / Discussion Points
+   - Findings / Outcomes
+
+4. STRICT OUTPUT RULE (DAILY ENTRIES & DATES):
+   - You MUST generate EXACTLY ${totalWorkingDays} daily structured entries starting from the Start Date (${startDateStr}).
+   - Skip all Sundays.
+   - Ignore the End Date if necessary to maintain exactly ${totalWorkingDays} entries.
+   - Start at "day": 1 and end exactly at "day": ${totalWorkingDays}.
+   - The entries must logically represent the COMPLETE project lifecycle from start to finish:
+       • Early Days: Initial planning, orientation, literature survey/setup
+       • Middle Days: Design, architecture, and core implementation phase
+       • Late Days: Testing, debugging, refinement, documentation, and final review
+
+5. INTELLIGENT GAP-FILLING (CRITICAL):
+   - The user has provided incomplete, chunked data. Some areas are marked as "[User left this blank]".
+   - Do NOT output empty strings, arrays, or errors for missing periods.
+   - You MUST intelligently break down the user's summaries into individual DAILY tasks.
+   - You MUST invent and infer realistic, domain-specific tasks to fill all gaps smoothly.
+   - Base your inferences heavily on the "Company Name", "Domain", and "Overall Project Brief".
+
+6. Maintain strict chronological order by date, skipping Sundays.
+7. Continue sequential numbering strictly from "day": 1 to "day": ${totalWorkingDays}.
+
+8. Avoid repetition:
+   - Do not repeat similar tasks across consecutive days.
+   - Ensure each day shows clear progression or variation.
+
+9. Maintain realistic skill progression:
+   - Start with fundamentals.
+   - Gradually move to advanced topics.
+   - Do not introduce advanced technologies too early.
+
+10. Map fields to the VTU portal JSON format:
+   "day": Sequential number (1 to ${totalWorkingDays})
+   "date": Date in DD-MM-YYYY format
+   "work_summary": Professional summary derived from logs or intelligently inferred. MUST be concise (max 2 sentences).
+   "hours_worked": Always assign 8.0 unless explicitly specified otherwise.
+   "learnings_outcomes": Academic learning statement derived from the logs/inferences.
+   "skills_used": Select ONLY from the allowed skills list.
+
+11. Allowed Skills List (STRICT SELECTION ONLY):
+   [
+     C++, Circuit Design, IoT, Kotlin, AWS, Azure, Computer vision, Canva, DevOps, CSS, 
+     Data modeling, Embedded Systems, Java, JavaScript, Data Encryption, Flutter, Git, 
+     Docker, firewall configuration, HTML, Kubernets, Layout Design, Machine Learning, 
+     Google Cloud, PostgreSql, mySql, Node.js, React.js, PHP, Python, VLSI Design
+   ]
+   Do NOT invent new skills. Select skills logically based on the work inferred/performed.
+
+12. Output requirements:
+   - STRICT JSON array only
+   - No conversational text, greetings, or explanations
+   - No markdown outside the JSON block
+   - Only valid JSON
+
+OUTPUT FORMAT:
+[
+  {
+    "day": 1,
+    "date": "DD-MM-YYYY",
+    "work_summary": "...",
+    "hours_worked": 8.0,
+    "learnings_outcomes": "...",
+    "skills_used": ["IoT", "Embedded Systems"]
+  },
+  {
+    "day": 2,
+    "date": "DD-MM-YYYY",
+    "work_summary": "...",
+    "hours_worked": 8.0,
+    "learnings_outcomes": "...",
+    "skills_used": ["IoT"]
+  }
+]
+
+Now, carefully analyze the provided internship context below, generate EXACTLY ${totalWorkingDays} daily structured JSON entries starting from ${startDateStr}, skip all Sundays, and ensure a realistic, non-repetitive progression.
+
+--- INTERNSHIP CONTEXT & LOG DATA ---
+Company Name: ${company}
+Domain: ${domain}
+Overall Project Brief: ${brief}
+
+Raw User Log Entries:
+${logDataStr}
+-------------------------------------`;
+
+            const outputArea = document.getElementById('prompt-output');
+            outputArea.value = promptTemplate;
+
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyPrompt() {
+            const outputArea = document.getElementById('prompt-output');
+            outputArea.select();
+            outputArea.setSelectionRange(0, 99999);
+
+            navigator.clipboard.writeText(outputArea.value).then(() => {
+                const copyBtn = document.querySelector('.btn-success');
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                alert("Failed to copy text. Please select and copy manually.");
+            });
+        }
+    </script>
+
+</body>
+
+</html>
