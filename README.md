@@ -2,7 +2,7 @@
 
 This Python script automates the process of filling out the daily internship diary on the VTU Internship Portal. It uses Selenium WebDriver to log in, navigate the dashboard, and populate weekly entries from a JSON file.
 
-### get your prompt here -----> https://shreyas445.github.io/VTU-Internship-diary-Automation/
+ Get your prompt here -----> https://shreyas445.github.io/VTU-Internship-diary-Automation/
 1. Enter the required details in the above website
 2. Generate the prompt and copy it
 3. Paste the prompt in any AI websites like ChatGPT, Gemini etc
