@@ -130,6 +130,10 @@ This tool is intended solely for **educational purposes** to demonstrate Python 
 *   **No Data Collection**: The developer does **not** collect, store, or transmit any of your personal data, login credentials (`credentials.json`), or diary entries.
 *   **Credentials Security**: Your `credentials.json` file remains on your computer. You are responsible for keeping this file secure and not sharing it publicly (e.g., do not commit it to GitHub).
 
+## 🐌 if your looking for project diary automation
+click here ----> https://github.com/Shreyas445/VTU-Project-Diary-Automation
+
+
 ## 📄 License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
