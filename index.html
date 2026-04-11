@@ -128,6 +128,25 @@
             min-height: 100px;
         }
 
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: #F9FAFB;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-weight: 400;
+            cursor: pointer;
+            margin: 0;
+        }
+
         .toggle-container {
             display: flex;
             flex-wrap: wrap;
@@ -288,8 +307,8 @@
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-robot"></i> VTU Daily Diary Generator</h1>
-            <p>Enter your details. The AI will output a strict Day-by-Day JSON array, filling in any gaps with realistic
-                progressions.</p>
+            <p>Select your actual working days. The AI will output a strict Day-by-Day JSON array, mapping perfectly to
+                your schedule.</p>
         </div>
 
         <div class="card">
@@ -319,6 +338,22 @@
                                 class="required-asterisk">*</span></label>
                         <input type="text" id="end-date" placeholder="DD-MM-YYYY" maxlength="10" required>
                         <div class="error-message" id="end-date-error">Please enter a valid date (DD-MM-YYYY).</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label><i class="fas fa-calendar-day"></i> Working Days per Week <span
+                                class="required-asterisk">*</span></label>
+                        <div class="checkbox-group" id="working-days">
+                            <label class="checkbox-label"><input type="checkbox" value="1" checked> Monday</label>
+                            <label class="checkbox-label"><input type="checkbox" value="2" checked> Tuesday</label>
+                            <label class="checkbox-label"><input type="checkbox" value="3" checked> Wednesday</label>
+                            <label class="checkbox-label"><input type="checkbox" value="4" checked> Thursday</label>
+                            <label class="checkbox-label"><input type="checkbox" value="5" checked> Friday</label>
+                            <label class="checkbox-label"><input type="checkbox" value="6" checked> Saturday</label>
+                            <label class="checkbox-label"><input type="checkbox" value="0"> Sunday</label>
+                        </div>
                     </div>
                 </div>
 
@@ -358,6 +393,9 @@
                     <i class="fas fa-exclamation-circle"></i> Please fill in all required fields (marked with *) and
                     ensure dates are correct.
                 </div>
+                <div class="error-message" id="days-error" style="text-align: center;">
+                    <i class="fas fa-exclamation-circle"></i> Please select at least one working day.
+                </div>
 
                 <div class="form-row" style="margin-top: 2rem; margin-bottom: 0;">
                     <div class="form-group full-width">
@@ -385,6 +423,18 @@
         let parsedStartDate = null;
         let parsedEndDate = null;
         let totalWorkingDays = 0;
+        let validDatesArray = []; // Stores the exact valid dates
+
+        // Listen for checkbox changes to auto-update fields
+        document.querySelectorAll('#working-days input').forEach(checkbox => {
+            checkbox.addEventListener('change', validateDates);
+        });
+
+        // Get selected days of the week [0-6]
+        function getSelectedDays() {
+            const checkboxes = document.querySelectorAll('#working-days input:checked');
+            return Array.from(checkboxes).map(cb => parseInt(cb.value));
+        }
 
         // Date parsing function for DD-MM-YYYY
         function parseDateString(str) {
@@ -392,7 +442,7 @@
             if (!match) return null;
 
             const d = parseInt(match[1], 10);
-            const m = parseInt(match[2], 10) - 1; // Month is 0-indexed in JS Date
+            const m = parseInt(match[2], 10) - 1; // Month is 0-indexed
             const y = parseInt(match[3], 10);
 
             const date = new Date(y, m, d);
@@ -402,9 +452,8 @@
             return null;
         }
 
-        // Auto-format dates while typing and validate
         function handleDateInput(e) {
-            let val = e.target.value.replace(/\D/g, ''); // Remove non-digits
+            let val = e.target.value.replace(/\D/g, '');
             if (val.length > 8) val = val.substring(0, 8);
 
             let formatted = val;
@@ -428,6 +477,16 @@
         function validateDates() {
             const startStr = document.getElementById('start-date').value;
             const endStr = document.getElementById('end-date').value;
+            const selectedDays = getSelectedDays();
+            const daysError = document.getElementById('days-error');
+
+            if (selectedDays.length === 0) {
+                daysError.style.display = 'block';
+                document.getElementById('dynamic-fields').innerHTML = '';
+                return;
+            } else {
+                daysError.style.display = 'none';
+            }
 
             parsedStartDate = parseDateString(startStr);
             parsedEndDate = parseDateString(endStr);
@@ -458,7 +517,11 @@
             if (parsedStartDate && parsedEndDate) {
                 if (parsedStartDate <= parsedEndDate) {
                     calculateTotalWorkingDays();
-                    generateFields();
+                    if (totalWorkingDays > 0) {
+                        generateFields();
+                    } else {
+                        document.getElementById('dynamic-fields').innerHTML = '<p style="color: var(--error);"><i class="fas fa-exclamation-triangle"></i> No valid working days found in this date range based on your selection.</p>';
+                    }
                 } else {
                     document.getElementById('dynamic-fields').innerHTML = '<p style="color: var(--error);"><i class="fas fa-exclamation-triangle"></i> Error: End Date cannot be earlier than Start Date.</p>';
                 }
@@ -467,10 +530,14 @@
 
         function calculateTotalWorkingDays() {
             totalWorkingDays = 0;
+            validDatesArray = [];
             let curr = new Date(parsedStartDate);
+            const selectedDays = getSelectedDays();
+
             while (curr <= parsedEndDate) {
-                if (curr.getDay() !== 0) { // 0 is Sunday
+                if (selectedDays.includes(curr.getDay())) {
                     totalWorkingDays++;
+                    validDatesArray.push(new Date(curr));
                 }
                 curr.setDate(curr.getDate() + 1);
             }
@@ -483,11 +550,22 @@
             document.getElementById('btn-month').classList.remove('active');
             document.getElementById(`btn-${mode}`).classList.add('active');
             if (parsedStartDate && parsedEndDate && parsedStartDate <= parsedEndDate) {
-                generateFields();
+                validateDates();
             }
         }
 
-        function formatDateStr(dateObj) {
+        // Returns format: "Monday, 12-04-2026"
+        function formatDateWithDay(dateObj) {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const dayName = days[dateObj.getDay()];
+            const dd = String(dateObj.getDate()).padStart(2, '0');
+            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const yyyy = dateObj.getFullYear();
+            return `${dayName}, ${dd}-${mm}-${yyyy}`;
+        }
+
+        // Returns format: "12-04-2026" for the prompt payload
+        function formatDateStandard(dateObj) {
             const dd = String(dateObj.getDate()).padStart(2, '0');
             const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
             const yyyy = dateObj.getFullYear();
@@ -497,13 +575,14 @@
         function generateFields() {
             const container = document.getElementById('dynamic-fields');
             container.innerHTML = '';
+            const selectedDays = getSelectedDays();
 
             if (currentMode === 'day') {
                 let current = new Date(parsedStartDate);
                 let dayCount = 1;
                 while (current <= parsedEndDate) {
-                    if (current.getDay() !== 0) {
-                        createEntryField(`Day ${dayCount} (${formatDateStr(current)})`, `day-${dayCount}`);
+                    if (selectedDays.includes(current.getDay())) {
+                        createEntryField(`Day ${dayCount} (${formatDateWithDay(current)})`, `day-${dayCount}`);
                         dayCount++;
                     }
                     current.setDate(current.getDate() + 1);
@@ -516,7 +595,7 @@
                     weekEnd.setDate(weekEnd.getDate() + 6);
                     if (weekEnd > parsedEndDate) weekEnd = new Date(parsedEndDate);
 
-                    let dateRangeStr = `${formatDateStr(current)} to ${formatDateStr(weekEnd)}`;
+                    let dateRangeStr = `${formatDateWithDay(current)} to ${formatDateWithDay(weekEnd)}`;
                     createEntryField(`Week ${weekCount} (${dateRangeStr})`, `week-${weekCount}`);
 
                     weekCount++;
@@ -531,7 +610,7 @@
                     monthEnd.setDate(monthEnd.getDate() - 1);
                     if (monthEnd > parsedEndDate) monthEnd = new Date(parsedEndDate);
 
-                    let dateRangeStr = `${formatDateStr(current)} to ${formatDateStr(monthEnd)}`;
+                    let dateRangeStr = `${formatDateWithDay(current)} to ${formatDateWithDay(monthEnd)}`;
                     createEntryField(`Month ${monthCount} (${dateRangeStr})`, `month-${monthCount}`);
 
                     monthCount++;
@@ -559,8 +638,15 @@
             const brief = document.getElementById('brief').value.trim();
             const startDateStr = document.getElementById('start-date').value;
             const errorMsg = document.getElementById('validation-error');
+            const daysError = document.getElementById('days-error');
+            const selectedDays = getSelectedDays();
 
-            if (!company || !domain || !brief || !parsedStartDate || !parsedEndDate || parsedStartDate > parsedEndDate) {
+            if (selectedDays.length === 0) {
+                daysError.style.display = 'block';
+                return;
+            }
+
+            if (!company || !domain || !brief || !parsedStartDate || !parsedEndDate || parsedStartDate > parsedEndDate || totalWorkingDays === 0) {
                 errorMsg.style.display = 'block';
                 return;
             }
@@ -574,6 +660,9 @@
                 logDataStr += `* ${input.getAttribute('data-label')}:\n  ${val || "[User left this blank - AI MUST infer and distribute realistic tasks for this period]"}\n\n`;
             });
 
+            // Generate string of exact dates for the AI to follow strictly
+            let exactDatesListStr = validDatesArray.map((d, index) => `${index + 1}. ${formatDateWithDay(d)}`).join('\n');
+
             const promptTemplate = `You are an AI system that generates and structures internship diary data based on partial or incomplete user input.
 
 TASK:
@@ -581,7 +670,7 @@ Convert the provided Internship Context and Log Data into a strict DAILY structu
 
 IMPORTANT RULES:
 
-1. Generate and format DAILY meeting/work entries.
+1. Generate and format DAILY meeting/work entries based ONLY on the approved Valid Dates list provided below.
 2. Ignore purely administrative filler; focus on core technical work, progression, and learning.
 3. Your output must strictly contain:
    - Day number
@@ -589,10 +678,9 @@ IMPORTANT RULES:
    - Work done / Discussion Points
    - Findings / Outcomes
 
-4. STRICT OUTPUT RULE (DAILY ENTRIES & DATES):
-   - You MUST generate EXACTLY ${totalWorkingDays} daily structured entries starting from the Start Date (${startDateStr}).
-   - Skip all Sundays.
-   - Ignore the End Date if necessary to maintain exactly ${totalWorkingDays} entries.
+4. STRICT OUTPUT RULE (EXACT DATES & DAY COUNT):
+   - You MUST generate EXACTLY ${totalWorkingDays} daily structured entries.
+   - You MUST ONLY use the exact dates provided in the "VALID WORKING DATES" list below. Do not guess, do not add extra days, and do not skip any dates in the list.
    - Start at "day": 1 and end exactly at "day": ${totalWorkingDays}.
    - The entries must logically represent the COMPLETE project lifecycle from start to finish:
        • Early Days: Initial planning, orientation, literature survey/setup
@@ -602,11 +690,11 @@ IMPORTANT RULES:
 5. INTELLIGENT GAP-FILLING (CRITICAL):
    - The user has provided incomplete, chunked data. Some areas are marked as "[User left this blank]".
    - Do NOT output empty strings, arrays, or errors for missing periods.
-   - You MUST intelligently break down the user's summaries into individual DAILY tasks.
+   - You MUST intelligently break down the user's summaries into individual DAILY tasks corresponding to the Valid Dates.
    - You MUST invent and infer realistic, domain-specific tasks to fill all gaps smoothly.
    - Base your inferences heavily on the "Company Name", "Domain", and "Overall Project Brief".
 
-6. Maintain strict chronological order by date, skipping Sundays.
+6. Maintain strict chronological order matching the provided Valid Dates list.
 7. Continue sequential numbering strictly from "day": 1 to "day": ${totalWorkingDays}.
 
 8. Avoid repetition:
@@ -650,18 +738,14 @@ OUTPUT FORMAT:
     "hours_worked": 8.0,
     "learnings_outcomes": "...",
     "skills_used": ["IoT", "Embedded Systems"]
-  },
-  {
-    "day": 2,
-    "date": "DD-MM-YYYY",
-    "work_summary": "...",
-    "hours_worked": 8.0,
-    "learnings_outcomes": "...",
-    "skills_used": ["IoT"]
   }
 ]
 
-Now, carefully analyze the provided internship context below, generate EXACTLY ${totalWorkingDays} daily structured JSON entries starting from ${startDateStr}, skip all Sundays, and ensure a realistic, non-repetitive progression.
+Now, carefully analyze the provided internship context below, generate EXACTLY ${totalWorkingDays} daily structured JSON entries matching the Valid Dates list, and ensure a realistic, non-repetitive progression.
+
+--- VALID WORKING DATES (USE THESE EXACT DATES) ---
+${exactDatesListStr}
+---------------------------------------------------
 
 --- INTERNSHIP CONTEXT & LOG DATA ---
 Company Name: ${company}
