@@ -397,7 +397,7 @@ def fill_diary_entries():
                 # Scroll to it just in case
                 driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", save_btn)
                 time.sleep(0.5)
-                # force_click(save_btn) # Temporarily commented out for testing
+                force_click(save_btn) # Temporarily commented out for testing
                 print("Save button click commented out for testing. Moving to next entry...")
                 time.sleep(2) # Reduced sleep since we aren't waiting for network/redirect
             except Exception as e:
