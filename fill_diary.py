@@ -286,7 +286,8 @@ def fill_diary_entries():
             except Exception as e:
                 print(f"  > Continue error: {e}")
         
-            time.sleep(3) # Wait for animation
+            # REDUCED DELAY HERE
+            time.sleep(1) # Changed from 3 to 1 to remove some delay
             
             # --- Step 2: Details ---
             print("In Details Section...")
@@ -319,7 +320,6 @@ def fill_diary_entries():
             except:
                  try:
                     # Try finding by label if possible, or generic input type number
-                    # hours_input = driver.find_element(By.XPATH, "//label[contains(., 'Hours')]/following::input[1]")
                     hours_input = driver.find_element(By.XPATH, "//label[contains(text(), 'Hour')]/following::input[1]")
                     hours_input.clear()
                     hours_input.send_keys(str(entry['hours_worked']))
@@ -390,16 +390,19 @@ def fill_diary_entries():
                 print(f"  > Skills error: {e}")
                 
             # Save
-            # Save
             print("Saving...")
             try:
                 save_btn = driver.find_element(By.XPATH, "//button[contains(text(), 'Save') or contains(text(), 'Submit')]")
                 # Scroll to it just in case
                 driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", save_btn)
                 time.sleep(0.5)
-                force_click(save_btn) # Temporarily commented out for testing
-                print("Save button click commented out for testing. Moving to next entry...")
-                time.sleep(2) # Reduced sleep since we aren't waiting for network/redirect
+                
+                force_click(save_btn)
+                print("Clicked Save. Moving to next entry...")
+                
+                # ADDED 2-SECOND DELAY HERE
+                time.sleep(2) 
+                
             except Exception as e:
                 print(f"Error clicking Save: {e}")
             
