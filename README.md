@@ -97,6 +97,37 @@ Don't want to type your entries manually? We've created a custom web tool to eas
     *   Navigate to the Internship Diary section.
     *   Loop through each week in your JSON file, filling out the details and saving the entry.
 4.  Once finished, the terminal will prompt you to press **Enter** to close the browser.
+<br>
+
+### <p align="center">OR</p>
+
+## 🔥 For Super fast filling
+Fill months of dairy entries in seconds
+1.  Make sure you have your `credentials.json` and `internship_diary_entries.json` ready.
+2.  Run the script:
+    ```bash
+    python fast_api_diary.py
+    ```
+3.  The browser will **Not open** and perform the following actions:
+    *   Log in to the portal.
+    *   Download required api requests(for skills and others).
+    *   Loop through each week in your JSON file, filling out the details and saving the entry.
+4.  Once finished, the terminal will prompt you to press **Enter** to close the browser.
+
+<br>
+<br>
+
+# Selenium vs API Automation Speed Comparison
+
+| Feature                   | python fill_diary.py | python fast_api_diary.py |
+|---------------------------|----------------------|--------------------------|
+| Speed                     | Slow                 | Fast                     |
+| Execution Time/month      | 15-20 mins           | 10-20 seconds            |
+| Resource Usage            | Selenium             | Api calls                |
+| Stability                 | Medium               | High                     |
+    
+
+> API automation is much faster because it skips browser rendering and interacts directly with backend services.
 
 ## ⚠️ Important Notes
 
