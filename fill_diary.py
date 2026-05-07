@@ -219,23 +219,33 @@ def fill_diary_entries():
 
                 # 4. Click Day (Dynamic)
                 print(f"  Debug: Picking day: {target_day}")
-                # Try finding button in the calendar container (div[3]) with text match
-                # WE USE starts-with or exact text match logic for buttons
-                day_xpath = f"//button[contains(@class, 'rdp-day_button') and (text()='{target_day}' or normalize-space(text())='{target_day}')]"
+                # Try finding button in the calendar container with text match
+                day_xpath = f"//button[(contains(@class, 'rdp-day_button') or @name='day' or contains(@class, 'day')) and (text()='{target_day}' or normalize-space(text())='{target_day}')]"
                 days = driver.find_elements(By.XPATH, day_xpath)
                 
+                if not days:
+                     day_xpath = f"//td//button[(text()='{target_day}' or normalize-space(text())='{target_day}')]"
+                     days = driver.find_elements(By.XPATH, day_xpath)
+
                 clicked_day = False
-                # Try to click the one that is displayed (e.g. current month)
-                for d in days:
+                visible_days = [d for d in days if d.is_displayed()]
+                
+                if visible_days:
                     try:
-                        if d.is_displayed():
-                            d.click()
-                            clicked_day = True
-                            break
+                        if len(visible_days) > 1:
+                            # Smart selection to avoid greyed-out dates:
+                            # If target_day > 15, current month is always after previous month (pick last)
+                            # If target_day <= 15, current month is always before next month (pick first)
+                            target_btn = visible_days[-1] if int(target_day) > 15 else visible_days[0]
+                        else:
+                            target_btn = visible_days[0]
+                        
+                        force_click(target_btn)
+                        clicked_day = True
                     except: pass
                 
                 if not clicked_day and days:
-                    force_click(days[0]) # Fallback
+                    force_click(days[-1] if int(target_day) > 15 else days[0]) # Fallback
                     clicked_day = True
                     
                 if clicked_day:
